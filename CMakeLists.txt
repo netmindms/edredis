@@ -1,0 +1,27 @@
+cmake_minimum_required(VERSION 2.6)
+project(edredis)
+set(EDREDIS_VER_MAJOR 0)
+set(EDREDIS_VER_MINOR 5)
+set(EDREDIS_VER_PATCH 1)
+set(EDREDIS_VER ${EDREDIS_VER_MAJOR}.${EDREDIS_VER_MINOR}.${EDREDIS_VER_PATCH} )
+
+# set default build option
+if(NOT CMAKE_BUILD_TYPE )
+	set(CMAKE_BUILD_TYPE Release)
+endif()	
+#set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++0x -O3 -Wall -fmessage-length=0 " )
+set(CMAKE_CXX_FLAGS "-std=c++0x " )
+file(GLOB ALLSRCS "src/*.cpp" )
+include_directories("/home/netmind/lib/ednio/include")
+add_library(edredis SHARED ${ALLSRCS})
+add_library(edredis_static STATIC ${ALLSRCS})
+
+#set_target_properties(ednio PROPERTIES SUFFIX .${EDNIO_VER_MAJOR}.0.${EDNIO_VER_MINOR}.so)
+#get_target_property(suffix ednio SUFFIX)
+#MESSAGE('suffix = ${suffix}')
+set_target_properties(edredis PROPERTIES SOVERSION 0 VERSION ${EDREDIS_VER})
+install(TARGETS edredis DESTINATION lib ) 
+#install(FILES  DESTINATION edredis )
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/ DESTINATION include/edredis
+        FILES_MATCHING PATTERN "*.h")
