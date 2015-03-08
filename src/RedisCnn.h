@@ -19,7 +19,7 @@ namespace aredis {
 
 typedef function<void(int32_t, upRedisVal)> redisCb;
 
-class RedisCnn : public EdSmartSocket::INet {
+class RedisCnn  {
 public:
 	RedisCnn();
 	virtual ~RedisCnn();
@@ -35,7 +35,7 @@ private:
 	EdSmartSocket mSock;
 	unordered_map<int32_t, redisCb> mCbMap;
 	function<void (uint32_t, upRedisVal)> mOnLis;
-	void IOnNet(EdSmartSocket *psock, int event) override ;
+
 
 };
 
